@@ -1,14 +1,15 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import os
 
 app = Flask(__name__)
 CORS(app)
 
-
 valid_users = [
     ('User123', 'Pass123'), 
     ('User456', 'Pass456'),
-    ('User789', 'Pass789')]
+    ('User789', 'Pass789')
+]
 
 @app.route('/api/authentication', methods=['POST'])
 def handle_user_authentication():
@@ -33,5 +34,9 @@ def handle_user_authentication():
     else:
         return jsonify({'error': 'Request must be in JSON format'}), 400
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
+
+
